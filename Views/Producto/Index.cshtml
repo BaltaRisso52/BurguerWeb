@@ -1,0 +1,40 @@
+@model List<Producto>
+
+@if (!Model.Any())
+{
+    <p>No hay productos disponibles.</p>
+}
+else
+{
+    foreach (var producto in Model)
+    {
+        <div class="producto">
+            <h3>@producto.Nombre</h3>
+            <p>@producto.Descripcion</p>
+            <img src="@producto.Img" alt="@producto.Nombre" width="200" />
+
+            @if (producto.VariantesProducto.Any())
+            {
+                <div class="producto">
+                <label>Elige una variante:</label>
+                <select name="VarianteId" class="select-variante" data-producto-id="@producto.IdProducto">
+                    @foreach (var variante in producto.VariantesProducto)
+                    {
+                        <option value="@variante.Id">
+                            @variante.Nombre - $@variante.Precio
+                        </option>
+                    }
+                </select>
+                </div>
+
+                <button class="btn-agregar-carrito" data-id="@producto.IdProducto">Agregar al carrito</button>
+
+            }
+            else
+            {
+                <p>Precio: $@producto.PrecioBase</p>
+                <button class="btn-agregar-carrito" data-id="@producto.IdProducto">Agregar al carrito</button>
+            }
+        </div>
+    }
+}

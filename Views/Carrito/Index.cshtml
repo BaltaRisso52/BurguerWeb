@@ -1,0 +1,35 @@
+@model Carrito
+
+@{
+    ViewData["Title"] = "Tu Carrito";
+}
+
+<h2 class="mb-4">Tu Carrito</h2>
+
+@if (Model.Items == null || !Model.Items.Any())
+{
+    <div class="alert alert-info">El carrito está vacío.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model.Items)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="@item.ImagenUrl" class="card-img-top" alt="@item.Nombre">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Nombre</h5>
+                        <p class="card-text">Precio: $@item.Precio</p>
+                        <p class="card-text">Cantidad: @item.Cantidad</p>
+                        <p class="card-text"><strong>Subtotal: $@(item.Cantidad * item.Precio)</strong></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="mt-4">
+        <h4>Total: $@Model.Total</h4>
+    </div>
+}
